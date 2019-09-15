@@ -1,0 +1,187 @@
+/**
+ * Copyright(c) 2017-2018 NIOS, All Rights Reserved. Project: NRA-DATA Author: Administrator Createdate: 2019年5月17日
+ * 上午11:00:30 Version: 1.0
+ */
+package com.genertech.consumer.domain;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import com.genertech.common.base.annotation.Column;
+import com.genertech.common.base.annotation.Id;
+import com.genertech.common.base.annotation.Table;
+
+/**
+ * @Description:
+ * @project NRA-DATA
+ * @class PJZD.java
+ * @author Administrator
+ * @version 1.0
+ * @date 2019年5月17日 上午11:00:30
+ */
+@Table("PJZD_TEST")
+public class PJZD implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id(value = "ID")
+    private String            ID;                   // 项目编码
+    @Column(value = "AA")
+    private String            AA;                   // 项目编号
+    @Column(value = "AB")
+    private String            AB;                   // 项目名称
+    @Column(value = "AC")
+    private String            AC;                   // 公司
+    @Column(value = "AD")
+    private String            AD;                   // 项目描述
+    @Column(value = "AE")
+    private String            AE;                   // 项目附件
+    @Column(value = "ZV")
+    private Date              ZV;                   // 创建时间
+    @Column(value = "ZW")
+    private Date              ZW;                   // 修改时间
+    @Column(value = "ZX")
+    private String            ZX;                   // 创建人
+    @Column(value = "ZY")
+    private String            ZY;                   // 修改人
+    @Column(value = "ZZ")
+    private String            ZZ;                   // 启用标记
+    @Column(value = "AF")
+    private String            AF;                   // 起始车号
+    @Column(value = "AG")
+    private String            AG;                   // 结束车号
+    @Column(value = "BB")
+    private String            BB;                   // 车型编码
+    @Column(value = "PID")
+    private String            PID;                  // 父项目
+    @Column(value = "ISPARENT")
+    private String            ISPARENT;             // 是否是父项目 Y N
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String iD) {
+        ID = iD;
+    }
+
+    public String getAA() {
+        return AA;
+    }
+
+    public void setAA(String aA) {
+        AA = aA;
+    }
+
+    public String getAB() {
+        return AB;
+    }
+
+    public void setAB(String aB) {
+        AB = aB;
+    }
+
+    public String getAC() {
+        return AC;
+    }
+
+    public void setAC(String aC) {
+        AC = aC;
+    }
+
+    public String getAD() {
+        return AD;
+    }
+
+    public void setAD(String aD) {
+        AD = aD;
+    }
+
+    public String getAE() {
+        return AE;
+    }
+
+    public void setAE(String aE) {
+        AE = aE;
+    }
+
+    public Date getZV() {
+        return ZV;
+    }
+
+    public void setZV(Date zV) {
+        ZV = zV;
+    }
+
+    public Date getZW() {
+        return ZW;
+    }
+
+    public void setZW(Date zW) {
+        ZW = zW;
+    }
+
+    public String getZX() {
+        return ZX;
+    }
+
+    public void setZX(String zX) {
+        ZX = zX;
+    }
+
+    public String getZY() {
+        return ZY;
+    }
+
+    public void setZY(String zY) {
+        ZY = zY;
+    }
+
+    public String getZZ() {
+        return ZZ;
+    }
+
+    public void setZZ(String zZ) {
+        ZZ = zZ;
+    }
+
+    public String getAF() {
+        return AF;
+    }
+
+    public void setAF(String aF) {
+        AF = aF;
+    }
+
+    public String getAG() {
+        return AG;
+    }
+
+    public void setAG(String aG) {
+        AG = aG;
+    }
+
+    public String getBB() {
+        return BB;
+    }
+
+    public void setBB(String bB) {
+        BB = bB;
+    }
+
+    public String getPID() {
+        return PID;
+    }
+
+    public void setPID(String pID) {
+        PID = pID;
+    }
+
+    public String getISPARENT() {
+        return ISPARENT;
+    }
+
+    public void setISPARENT(String iSPARENT) {
+        ISPARENT = iSPARENT;
+    }
+
+}

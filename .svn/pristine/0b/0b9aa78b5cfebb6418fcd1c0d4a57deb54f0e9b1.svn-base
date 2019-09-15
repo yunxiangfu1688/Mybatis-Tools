@@ -1,0 +1,181 @@
+package com.genertech.phm.pojo;
+
+import com.genertech.common.base.annotation.Column;
+import com.genertech.common.base.annotation.Id;
+import com.genertech.common.base.annotation.Table;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
+@Table("Ft_Prognostics")
+public class Prognostics {
+
+    @Id("id")
+    private String id;
+    @Id("phm_id")
+    private String phmId;
+    private String equipSn;//车组（只作为接收数据使用）
+    private String equipType;//车型（只作为接收数据使用）
+    @Column("MODEL_CODE")
+    private String modelCode;
+    @Column("MODEL")
+    private String model;
+    @Column("TRAIN_NO")
+    private String trainNo;
+    @Column("TRAIN")
+    private String train;
+    @Column("CARRIAGE_CODE")
+    private String areaCode;
+    @Column("FUNC_CODE")
+    private String sysCode;
+    @Column("PART_BEI")
+    private String partBei;
+    @Column("PART_NAME")
+    private String partName;
+    @Column("CODE")
+    private String code;
+    @Column("DESCRIPTION")
+    private String description;
+    @Column("LVL")
+    private String lvl;
+    @Column("CREATE_TIME")
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
+    @Column("STATUS")
+    private String status;
+    @Column("SOURCE")
+    private String source;
+    @Column("SOURCE_TYPE")
+    private String sourceType;
+
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
+    public String getModelCode() {
+        return modelCode;
+    }
+    public void setModelCode(String modelCode) {
+        this.modelCode = modelCode;
+    }
+    public String getTrainNo() {
+        return trainNo;
+    }
+    public void setTrainNo(String trainNo) {
+        this.trainNo = trainNo;
+    }
+    public String getPartBei() {
+        return partBei;
+    }
+    public void setPartBei(String partBei) {
+        this.partBei = partBei;
+    }
+    public String getPartName() {
+        return partName;
+    }
+    public void setPartName(String partName) {
+        this.partName = partName;
+    }
+    public String getCode() {
+        return code;
+    }
+    public void setCode(String code) {
+        this.code = code;
+    }
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public String getLvl() {
+        return lvl;
+    }
+    public void setLvl(String lvl) {
+        this.lvl = lvl;
+    }
+    public Date getCreateTime() {
+        return createTime;
+    }
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    public String getSource() {
+        return source;
+    }
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getAreaCode() {
+        return areaCode;
+    }
+
+    public void setAreaCode(String areaCode) {
+        this.areaCode = areaCode;
+    }
+
+    public String getSysCode() {
+        return sysCode;
+    }
+
+    public void setSysCode(String sysCode) {
+        this.sysCode = sysCode;
+    }
+
+    public String getEquipSn() {
+        return equipSn;
+    }
+
+    public void setEquipSn(String equipSn) {
+        this.equipSn = equipSn;
+    }
+
+    public String getPhmId() {
+        return phmId;
+    }
+
+    public void setPhmId(String phmId) {
+        this.phmId = phmId;
+    }
+
+    public String getSourceType() {
+        return sourceType;
+    }
+
+    public void setSourceType(String sourceType) {
+        this.sourceType = sourceType;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getTrain() {
+        return train;
+    }
+
+    public void setTrain(String train) {
+        this.train = train;
+    }
+
+    public String getEquipType() {
+        return equipType;
+    }
+
+    public void setEquipType(String equipType) {
+        this.equipType = equipType;
+    }
+}

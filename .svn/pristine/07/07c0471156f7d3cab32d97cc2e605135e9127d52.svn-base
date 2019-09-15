@@ -1,0 +1,289 @@
+/**
+ * Copyright(c) 2017-2018 NIOS, All Rights Reserved. Project: NRA-DATA Author: Administrator Createdate: 2019年5月17日
+ * 上午10:56:38 Version: 1.0
+ */
+package com.genertech.consumer.domain;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import com.genertech.common.base.annotation.Column;
+import com.genertech.common.base.annotation.Id;
+import com.genertech.common.base.annotation.Table;
+
+/**
+ * @Description:
+ * @project NRA-DATA
+ * @class CPZD.java
+ * @author Administrator
+ * @version 1.0
+ * @date 2019年5月17日 上午10:56:38
+ */
+@Table("CPZD_TEST")
+public class CPZD implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id(value = "id")
+    private String            id;                   // 车型代码
+    @Column(value = "AA")
+    private String            AA;                   // 公司编码
+    @Column(value = "AB")
+    private String            AB;                   // 车型名称
+    @Column(value = "AC")
+    private String            AC;                   // 产品附件
+    @Column(value = "AD")
+    private String            AD;                   // 车型别名
+    @Column(value = "AE")
+    private String            AE;                   // 备注
+    @Column(value = "AF")
+    private String            AF;                   // 编组数
+    @Column(value = "AG")
+    private Long              AG;                   // 最高速度（公里）
+    @Column(value = "AH")
+    private String            AH;                   // 铁总名称1
+    @Column(value = "AI")
+    private String            AI;                   // 铁总名称2
+    @Column(value = "ZV")
+    // @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
+    private Date              ZV;                   // 创建时间
+    @Column(value = "ZW")
+    // @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
+    private Date              ZW;                   // 修改时间
+    @Column(value = "ZX")
+    private String            ZX;                   // 创建人
+    @Column(value = "ZY")
+    private String            ZY;                   // 修改人
+    @Column(value = "ZZ")
+    private String            ZZ;                   // 启用标记
+    @Column(value = "AJ")
+    private Long              AJ;                   // 载客能力
+    @Column(value = "AK")
+    private Double            AK;                   // 列车长度（M）
+    @Column(value = "AL")
+    private Long              AL;                   // 牵引功率（KW）
+    @Column(value = "AM")
+    private Long              AM;                   // 紧急制动距离（mm）
+    @Column(value = "AN")
+    private Long              AN;                   // 车体长度（mm）
+    @Column(value = "AO")
+    private Long              AO;                   // 车体宽度（mm）
+    @Column(value = "AP")
+    private Long              AP;                   // 车体高度（mm）
+    @Column(value = "AQ")
+    private Long              AQ;                   // 地板高度（mm）
+    @Column(value = "AR")
+    private Long              AR;                   // 轴重（T）
+    @Column(value = "AU")
+    private String            AU;                   // 车型大类
+    @Column(value = "BA")
+    private String            BA;                   // 系统类型
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getAA() {
+        return AA;
+    }
+
+    public void setAA(String aA) {
+        AA = aA;
+    }
+
+    public String getAB() {
+        return AB;
+    }
+
+    public void setAB(String aB) {
+        AB = aB;
+    }
+
+    public String getAC() {
+        return AC;
+    }
+
+    public void setAC(String aC) {
+        AC = aC;
+    }
+
+    public String getAD() {
+        return AD;
+    }
+
+    public void setAD(String aD) {
+        AD = aD;
+    }
+
+    public String getAE() {
+        return AE;
+    }
+
+    public void setAE(String aE) {
+        AE = aE;
+    }
+
+    public String getAF() {
+        return AF;
+    }
+
+    public void setAF(String aF) {
+        AF = aF;
+    }
+
+    public Long getAG() {
+        return AG;
+    }
+
+    public void setAG(Long aG) {
+        AG = aG;
+    }
+
+    public String getAH() {
+        return AH;
+    }
+
+    public void setAH(String aH) {
+        AH = aH;
+    }
+
+    public String getAI() {
+        return AI;
+    }
+
+    public void setAI(String aI) {
+        AI = aI;
+    }
+
+    public Date getZV() {
+        return ZV;
+    }
+
+    public void setZV(Date zV) {
+        ZV = zV;
+    }
+
+    public Date getZW() {
+        return ZW;
+    }
+
+    public void setZW(Date zW) {
+        ZW = zW;
+    }
+
+    public String getZX() {
+        return ZX;
+    }
+
+    public void setZX(String zX) {
+        ZX = zX;
+    }
+
+    public String getZY() {
+        return ZY;
+    }
+
+    public void setZY(String zY) {
+        ZY = zY;
+    }
+
+    public String getZZ() {
+        return ZZ;
+    }
+
+    public void setZZ(String zZ) {
+        ZZ = zZ;
+    }
+
+    public Long getAJ() {
+        return AJ;
+    }
+
+    public void setAJ(Long aJ) {
+        AJ = aJ;
+    }
+
+    public Double getAK() {
+        return AK;
+    }
+
+    public void setAK(Double aK) {
+        AK = aK;
+    }
+
+    public Long getAL() {
+        return AL;
+    }
+
+    public void setAL(Long aL) {
+        AL = aL;
+    }
+
+    public Long getAM() {
+        return AM;
+    }
+
+    public void setAM(Long aM) {
+        AM = aM;
+    }
+
+    public Long getAN() {
+        return AN;
+    }
+
+    public void setAN(Long aN) {
+        AN = aN;
+    }
+
+    public Long getAO() {
+        return AO;
+    }
+
+    public void setAO(Long aO) {
+        AO = aO;
+    }
+
+    public Long getAP() {
+        return AP;
+    }
+
+    public void setAP(Long aP) {
+        AP = aP;
+    }
+
+    public Long getAQ() {
+        return AQ;
+    }
+
+    public void setAQ(Long aQ) {
+        AQ = aQ;
+    }
+
+    public Long getAR() {
+        return AR;
+    }
+
+    public void setAR(Long aR) {
+        AR = aR;
+    }
+
+    public String getAU() {
+        return AU;
+    }
+
+    public void setAU(String aU) {
+        AU = aU;
+    }
+
+    public String getBA() {
+        return BA;
+    }
+
+    public void setBA(String bA) {
+        BA = bA;
+    }
+
+}

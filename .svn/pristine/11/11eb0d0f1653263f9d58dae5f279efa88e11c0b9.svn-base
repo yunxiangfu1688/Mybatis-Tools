@@ -1,0 +1,23 @@
+package com.genertech.consumer.dao;
+
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+
+/**
+ * @Description:车组信息同步
+ * @project ASSM-DATA
+ * @class CZPSMapper.java
+ * @author Administrator
+ * @version 1.0
+ * @date 2019年5月16日 上午10:00:38
+ */
+@Mapper
+public interface CmPartBomMapper {
+
+    @Select("select id from CM_PART_BOM t where  id=#{id}")
+    String getById(String id);// cm_part_bom
+
+    @Select("select id from RE_PART_BOM t where  id=#{id}")
+    String getReById(String id);// re_part_bom
+
+}

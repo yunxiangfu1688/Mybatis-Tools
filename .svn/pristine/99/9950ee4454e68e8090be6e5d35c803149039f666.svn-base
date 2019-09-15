@@ -1,0 +1,125 @@
+package com.genertech.controller;
+
+import com.alibaba.fastjson.JSON;
+import com.genertech.common.base.service.BaseDaoService;
+import com.genertech.common.utils.Identities;
+import com.genertech.consumer.ConsumerManager;
+import com.genertech.consumer.domain.CPZD;
+import com.genertech.consumer.domain.CZPS;
+import com.genertech.phm.PhmManager;
+import com.genertech.phm.pojo.ModelWheelAbrasionLaw;
+import com.genertech.phm.pojo.ModelWheelSizeLimitHis;
+import com.genertech.phm.pojo.Prognostics;
+import com.genertech.phm.pojo.TTF;
+import org.apache.activemq.command.ActiveMQQueue;
+import org.omg.PortableServer.LIFESPAN_POLICY_ID;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.jms.Queue;
+import java.util.*;
+
+@RestController
+public class TestController {
+
+    @Autowired
+    private ConsumerManager consumerManager;
+    @Autowired
+    private BaseDaoService daoService;
+
+    private Queue getQueue(String queueName) {
+        return new ActiveMQQueue(queueName);
+    }
+
+    @RequestMapping("/queue")
+    public String queue() {
+        System.out.println(consumerManager);
+        String message = "我是消息内容, " + System.currentTimeMillis();
+        // Destination destination = getQueue(Constants.MATERIAL_QUEUE);
+        // template.convertAndSend(destination, message);
+        return "success";
+    }
+
+    @RequestMapping("/test")
+    public int test() {
+        String message = "我是消息内容, " + System.currentTimeMillis();
+        Map<String, Object> map = null;
+        return 0;
+    }
+    @RequestMapping("/list")
+    public Object list(){
+        Map<String, Object> params = new HashMap<>();
+        List li = new ArrayList();
+        li.add("D501050014");
+        li.add("D303050075");
+        params.put("ids",li);
+//        List list = daoService.list("select id,aa from czps where id in #{ids}",params, CZPSDO.class);
+//        CZPSDO ss = new CZPSDO();
+//        daoService.insertObject(ss);
+        return null;
+    }
+    @RequestMapping("/insert")
+    public Object insert(){
+        Prognostics prognostics = new Prognostics();
+        prognostics.setId(Identities.uuid());
+        prognostics.setCreateTime(new Date());
+        prognostics.setModelCode("DB01");
+
+        Prognostics prognostics2 = new Prognostics();
+        prognostics2.setId(Identities.uuid());
+        prognostics2.setCreateTime(new Date());
+        prognostics2.setModelCode("DB01");
+
+        Prognostics prognostics3 = new Prognostics();
+        prognostics3.setId(Identities.uuid());
+        prognostics3.setCreateTime(new Date());
+        prognostics3.setModelCode("DB01");
+        prognostics3.setCreateTime(new Date());
+
+        List list = new ArrayList();
+        list.add(prognostics);
+        list.add(prognostics2);
+        list.add(prognostics3);
+        list.clear();
+        CPZD czps = new CPZD();
+        czps.setId("1111");
+        czps.setAA("1");
+        czps.setZZ("1");
+        czps.setAB("2");
+        czps.setAK(1.999D);
+        czps.setAR(33L);
+//        list.add(czps);
+        //批量添加
+//        daoService.insertObjects(list);
+        //批量更新
+//        daoService.updateObjects(list);
+        /**
+         * 模拟：寿命件次数
+         */
+        String data = "{\"areaCode\":\"04\",\"designLife\":100000.00,\"equipSn\":\"长客标动-5048\",\"equipType\":\"CR400BF\",\"id\":8802,\"mtrCode\":\"CNR0000211402\",\"partBei\":\"/04/15347/18394/\",\"serviceLife\":1497.00,\"supplierCode\":\"70004240\",\"sysCode\":\"6-5-2-1\",\"ttf\":98503.00,\"unitType\":\"1\",\"updateTime\":1558228167000}";
+        TTF ttf = JSON.parseObject(data, TTF.class);
+//        daoService.insertObject(ttf);
+        list.add(ttf);
+        /**
+         * 模拟：轮径到限
+         */
+        data = "{\"axle\":\"2\",\"car\":\"0\",\"createTime\":1544284800000,\"group\":\"5829\",\"limitDate\":1567267200000,\"type\":\"CRH380B\"}";
+        ModelWheelSizeLimitHis modelWheelSizeLimitHis = JSON.parseObject(data, ModelWheelSizeLimitHis.class);
+        modelWheelSizeLimitHis.setId(Identities.uuid());
+//        daoService.insertObject(modelWheelSizeLimitHis);
+        list.add(modelWheelSizeLimitHis);
+
+        /**
+         * 模拟：车轮磨耗分析
+         */
+        data = "{\"createTime\":1535533935000,\"firstAverageAbrasion\":1.65,\"firstAverageRepair\":0.54,\"firstMaxAbrasion\":1.83,\"firstMaxMileage\":45186.8,\"firstMaxRepair\":0.71,\"firstMinAbrasion\":1.42,\"firstMinMileage\":38507.88,\"firstMinRepair\":0.42,\"firstMonthMileage\":40734.19,\"id\":\"aed4b05b5f8c4c68824eb7096a0fd95d\",\"powerAverageAbrasion\":1.33,\"powerAverageRepair\":0.67,\"powerMaxAbrasion\":1.84,\"powerMaxMileage\":45194.71,\"powerMaxRepair\":1.25,\"powerMinAbrasion\":1,\"powerMinMileage\":38507.88,\"powerMinRepair\":0.33,\"powerMonthMileage\":42202.89,\"towedAverageAbrasion\":1.33,\"towedAverageRepair\":0.67,\"towedMaxAbrasion\":1.84,\"towedMaxMileage\":45194.71,\"towedMaxRepair\":1.25,\"towedMinAbrasion\":1,\"towedMinMileage\":38507.88,\"towedMinRepair\":0.33,\"towedMonthMileage\":42202.89,\"trainType\":\"CRH380B\"}";
+        ModelWheelAbrasionLaw modelWheelAbrasionLaw = JSON.parseObject(data, ModelWheelAbrasionLaw.class);
+//        daoService.insertObject(modelWheelAbrasionLaw);
+        list.add(modelWheelAbrasionLaw);
+
+        daoService.insertAllObjects(list);
+
+        return "1";
+    }
+}

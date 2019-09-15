@@ -1,0 +1,202 @@
+package com.genertech.phm.pojo;
+
+import com.genertech.common.base.annotation.Column;
+import com.genertech.common.base.annotation.Id;
+import com.genertech.common.base.annotation.Table;
+
+import java.util.Date;
+
+@Table("TTF")
+public class TTF {
+
+    @Id("ID")
+    private String id;
+    @Column("AREA_CODE")
+    private String areaCode;
+    @Column("AREA_NAME")
+    private String areaName;
+    @Column("EQUIP_SN")
+    private String equipSn;
+    @Column("EQUIP_NAME")
+    private String equipName;
+    @Column("EQUIP_TYPE")
+    private String equipType;
+    @Column("EQUIP_TYPE_NAME")
+    private String equipTypeName;
+    @Column("PART_BEI")
+    private String partBei;
+    @Column("PART_NAME")
+    private String partName;
+    @Column("MTR_CODE")
+    private String mtrCode;
+    @Column("MTR_NAME")
+    private String mtrName;
+    @Column("SYS_CODE")
+    private String sysCode;
+    @Column("SYS_NAME")
+    private String sysName;
+    @Column("SUPPLIER_CODE")
+    private String supplierCode;
+    @Column("UNIT_TYPE")
+    private String unitType;
+    @Column("DESIGN_LIFE")
+    private Float designLife;
+    @Column("SERVICE_LIFE")
+    private Float serviceLife;
+    @Column("TTF")
+    private Float ttf;
+    @Column("UPDATETIME")
+    private Date updateTime;
+
+    public String getAreaCode() {
+        return areaCode;
+    }
+
+    public void setAreaCode(String areaCode) {
+        this.areaCode = areaCode;
+    }
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
+    }
+
+    public String getEquipSn() {
+        return equipSn;
+    }
+
+    public void setEquipSn(String equipSn) {
+        this.equipSn = equipSn;
+    }
+
+    public String getEquipName() {
+        return equipName;
+    }
+
+    public void setEquipName(String equipName) {
+        this.equipName = equipName;
+    }
+
+    public String getEquipType() {
+        return equipType;
+    }
+
+    public void setEquipType(String equipType) {
+        this.equipType = equipType;
+    }
+
+    public String getEquipTypeName() {
+        return equipTypeName;
+    }
+
+    public void setEquipTypeName(String equipTypeName) {
+        this.equipTypeName = equipTypeName;
+    }
+
+    public String getPartBei() {
+        return partBei;
+    }
+
+    public void setPartBei(String partBei) {
+        this.partBei = partBei;
+    }
+
+    public String getPartName() {
+        return partName;
+    }
+
+    public void setPartName(String partName) {
+        this.partName = partName;
+    }
+
+    public String getMtrCode() {
+        return mtrCode;
+    }
+
+    public void setMtrCode(String mtrCode) {
+        this.mtrCode = mtrCode;
+    }
+
+    public String getMtrName() {
+        return mtrName;
+    }
+
+    public void setMtrName(String mtrName) {
+        this.mtrName = mtrName;
+    }
+
+    public String getSysCode() {
+        return sysCode;
+    }
+
+    public void setSysCode(String sysCode) {
+        this.sysCode = sysCode;
+    }
+
+    public String getSysName() {
+        return sysName;
+    }
+
+    public void setSysName(String sysName) {
+        this.sysName = sysName;
+    }
+
+    public String getSupplierCode() {
+        return supplierCode;
+    }
+
+    public void setSupplierCode(String supplierCode) {
+        this.supplierCode = supplierCode;
+    }
+
+    public String getUnitType() {
+        return unitType;
+    }
+
+    public void setUnitType(String unitType) {
+        this.unitType = unitType;
+    }
+
+    public Float getDesignLife() {
+        return designLife;
+    }
+
+    public void setDesignLife(Float designLife) {
+        this.designLife = designLife;
+    }
+
+    public Float getServiceLife() {
+        return serviceLife;
+    }
+
+    public void setServiceLife(Float serviceLife) {
+        this.serviceLife = serviceLife;
+    }
+
+    public Float getTtf() {
+        return ttf;
+    }
+
+    public void setTtf(Float ttf) {
+        this.ttf = ttf;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+}

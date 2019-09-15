@@ -1,0 +1,327 @@
+/**
+ * Copyright(c) 2017-2018 NIOS, All Rights Reserved. Project: ASSM-DATA Author: Administrator Createdate: 2019年5月20日
+ * 上午9:33:45 Version: 1.0
+ */
+package com.genertech.consumer.domain;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import com.genertech.common.base.annotation.Column;
+import com.genertech.common.base.annotation.Id;
+import com.genertech.common.base.annotation.Table;
+
+/**
+ * @Description:
+ * @project ASSM-DATA
+ * @class GSZD.java
+ * @author Administrator
+ * @version 1.0
+ * @date 2019年5月20日 上午9:33:45
+ */
+@Table("GSZD")
+public class GSZD implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id(value = "id")
+    private String            ID;                   // 公司编码
+    @Column(value = "AA")
+    private String            AA;                   // 公司简称
+    @Column(value = "AB")
+    private String            AB;                   // 公司名称
+    @Column(value = "AC")
+    private String            AC;                   // 公司地址
+    @Column(value = "AD")
+    private String            AD;                   // 公司邮编
+    // @Column(value = "AE")
+    private String            AE;                   // 联系电话
+    // @Column(value = "AF")
+    private String            AF;                   // 传真
+    // @Column(value = "AG")
+    private String            AG;                   // 邮件地址
+    // @Column(value = "AH")
+    private String            AH;                   // 网站地址
+    @Column(value = "AI")
+    private String            AI;                   // 省市编码
+    // @Column(value = "AJ")
+    private String            AJ;                   // 国际城市编码
+    // @Column(value = "AK")
+    private String            AK;                   // 国家编码
+    // @Column(value = "AL")
+    private String            AL;                   // 公司分类编码
+    // @Column(value = "AM")
+    private String            AM;                   // 父公司编码
+    // @Column(value = "AN")
+    private String            AN;                   // 营业执照编号
+    // @Column(value = "AO")
+    private String            AO;                   // 营业执照附件
+    @Column(value = "AP")
+    private Date              AP;                   // 营业执照有效期
+    // @Column(value = "AQ")
+    private String            AQ;                   // 税务登记证编号
+    // @Column(value = "AR")
+    private String            AR;                   // 税务登记证附件
+    // @Column(value = "AU")
+    private String            AU;                   // 税务登记证有效期
+    // @Column(value = "AV")
+    private String            AV;                   // 组织机构代码证编号
+    // @Column(value = "AW")
+    private String            AW;                   // 组织机构代码证附件
+    @Column(value = "AX")
+    private Date              AX;                   // 组织机构代码证有效期
+    @Column(value = "AY")
+    private String            AY;                   // 是否冻结
+    @Column(value = "ZV")
+    private Date              ZV;                   // 创建时间
+    @Column(value = "ZW")
+    private Date              ZW;                   // 修改时间
+    @Column(value = "ZX")
+    private String            ZX;                   // 创建人
+    @Column(value = "ZY")
+    private String            ZY;                   // 修改人
+    @Column(value = "ZZ")
+    private String            ZZ;                   // 启用标记
+    @Column(value = "BA")
+    private String            BA;                   // sap编码
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String iD) {
+        ID = iD;
+    }
+
+    public String getAA() {
+        return AA;
+    }
+
+    public void setAA(String aA) {
+        AA = aA;
+    }
+
+    public String getAB() {
+        return AB;
+    }
+
+    public void setAB(String aB) {
+        AB = aB;
+    }
+
+    public String getAC() {
+        return AC;
+    }
+
+    public void setAC(String aC) {
+        AC = aC;
+    }
+
+    public String getAD() {
+        return AD;
+    }
+
+    public void setAD(String aD) {
+        AD = aD;
+    }
+
+    public String getAE() {
+        return AE;
+    }
+
+    public void setAE(String aE) {
+        AE = aE;
+    }
+
+    public String getAF() {
+        return AF;
+    }
+
+    public void setAF(String aF) {
+        AF = aF;
+    }
+
+    public String getAG() {
+        return AG;
+    }
+
+    public void setAG(String aG) {
+        AG = aG;
+    }
+
+    public String getAH() {
+        return AH;
+    }
+
+    public void setAH(String aH) {
+        AH = aH;
+    }
+
+    public String getAI() {
+        return AI;
+    }
+
+    public void setAI(String aI) {
+        AI = aI;
+    }
+
+    public String getAJ() {
+        return AJ;
+    }
+
+    public void setAJ(String aJ) {
+        AJ = aJ;
+    }
+
+    public String getAK() {
+        return AK;
+    }
+
+    public void setAK(String aK) {
+        AK = aK;
+    }
+
+    public String getAL() {
+        return AL;
+    }
+
+    public void setAL(String aL) {
+        AL = aL;
+    }
+
+    public String getAM() {
+        return AM;
+    }
+
+    public void setAM(String aM) {
+        AM = aM;
+    }
+
+    public String getAN() {
+        return AN;
+    }
+
+    public void setAN(String aN) {
+        AN = aN;
+    }
+
+    public String getAO() {
+        return AO;
+    }
+
+    public void setAO(String aO) {
+        AO = aO;
+    }
+
+    public Date getAP() {
+        return AP;
+    }
+
+    public void setAP(Date aP) {
+        AP = aP;
+    }
+
+    public String getAQ() {
+        return AQ;
+    }
+
+    public void setAQ(String aQ) {
+        AQ = aQ;
+    }
+
+    public String getAR() {
+        return AR;
+    }
+
+    public void setAR(String aR) {
+        AR = aR;
+    }
+
+    public String getAU() {
+        return AU;
+    }
+
+    public void setAU(String aU) {
+        AU = aU;
+    }
+
+    public String getAV() {
+        return AV;
+    }
+
+    public void setAV(String aV) {
+        AV = aV;
+    }
+
+    public String getAW() {
+        return AW;
+    }
+
+    public void setAW(String aW) {
+        AW = aW;
+    }
+
+    public Date getAX() {
+        return AX;
+    }
+
+    public void setAX(Date aX) {
+        AX = aX;
+    }
+
+    public String getAY() {
+        return AY;
+    }
+
+    public void setAY(String aY) {
+        AY = aY;
+    }
+
+    public Date getZV() {
+        return ZV;
+    }
+
+    public void setZV(Date zV) {
+        ZV = zV;
+    }
+
+    public Date getZW() {
+        return ZW;
+    }
+
+    public void setZW(Date zW) {
+        ZW = zW;
+    }
+
+    public String getZX() {
+        return ZX;
+    }
+
+    public void setZX(String zX) {
+        ZX = zX;
+    }
+
+    public String getZY() {
+        return ZY;
+    }
+
+    public void setZY(String zY) {
+        ZY = zY;
+    }
+
+    public String getZZ() {
+        return ZZ;
+    }
+
+    public void setZZ(String zZ) {
+        ZZ = zZ;
+    }
+
+    public String getBA() {
+        return BA;
+    }
+
+    public void setBA(String bA) {
+        BA = bA;
+    }
+
+}

@@ -1,0 +1,27 @@
+package com.genertech.common.base.dao;
+
+import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * yunxiangfu@163.com
+ * 20190301
+ */
+
+@Mapper
+public interface BaseMapper {
+
+    @Insert("<script>INSERT INTO ${TABLE_NAME} (<foreach collection='dataMap.keys' item='key' index='index' separator=','>${key}</foreach>) values (<foreach collection='dataMap.keys' item='key' index='index' separator=','>#{dataMap[${key}]}</foreach>)</script>")
+    public int insert(Map params);
+    @Update("<script>update ${TABLE_NAME} set<foreach collection=\"dataMap.keys\" item=\"key\" index=\"index\" separator=\",\">${key}=#{dataMap[${key}]}</foreach>where ${KEY_ID}=#{KEY_VALUE}</script>")
+    public int update(Map params);
+    @Delete("<script>delete ${TABLE_NAME} where ${KEY_ID}=#{KEY_VALUE}</script>")
+    public int delete(Map params);
+    @Delete("<script>${SQL}</script>")
+    public int execute(Map params);
+    @Select("<script>${SQL}</script>")
+    public List<Map<String,Object>> list(Map<String, Object> params);
+}

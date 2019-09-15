@@ -1,0 +1,77 @@
+/**
+ * Copyright(c) 2017-2018 NIOS, All Rights Reserved. Project: NRA-DATA Author: Administrator Createdate: 2019年5月17日
+ * 上午10:56:38 Version: 1.0
+ */
+package com.genertech.consumer.domain;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import com.genertech.common.base.annotation.Column;
+import com.genertech.common.base.annotation.Id;
+import com.genertech.common.base.annotation.Table;
+
+/**
+ * @Description:
+ * @project NRA-DATA
+ * @class CPZD.java
+ * @author Administrator
+ * @version 1.0
+ * @date 2019年5月17日 上午10:56:38
+ */
+@Table("CRV_SYNC_DATA")
+public class CrvSyncData implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id(value = "id")
+    private String            id;                   // id
+    @Column(value = "type")
+    private String            type;                 // 表编码
+    @Column(value = "sync_data")
+    private String            sync_data;            // 数据
+    @Column(value = "CREATE_TIME")
+    private Date              CREATE_TIME;          // 时间
+    @Column(value = "STATUS")
+    private Integer           STATUS;               // 1 新增 2 更新
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getSync_data() {
+        return sync_data;
+    }
+
+    public void setSync_data(String sync_data) {
+        this.sync_data = sync_data;
+    }
+
+    public Date getCREATE_TIME() {
+        return CREATE_TIME;
+    }
+
+    public void setCREATE_TIME(Date cREATE_TIME) {
+        CREATE_TIME = cREATE_TIME;
+    }
+
+    public Integer getSTATUS() {
+        return STATUS;
+    }
+
+    public void setSTATUS(Integer sTATUS) {
+        STATUS = sTATUS;
+    }
+
+}

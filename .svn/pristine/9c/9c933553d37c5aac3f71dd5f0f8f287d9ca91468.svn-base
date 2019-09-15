@@ -1,0 +1,454 @@
+package com.genertech.consumer;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.annotation.JmsListener;
+import org.springframework.stereotype.Component;
+
+import com.alibaba.fastjson.JSON;
+import com.genertech.common.Constants;
+import com.genertech.common.base.service.BaseDaoService;
+import com.genertech.consumer.dao.CZPSMapper;
+import com.genertech.consumer.dao.CmPartBomMapper;
+import com.genertech.consumer.dao.LjzdMapper;
+import com.genertech.consumer.dao.YXGZTJMapper;
+import com.genertech.consumer.domain.BJZD;
+import com.genertech.consumer.domain.CZPS;
+import com.genertech.consumer.domain.CmPartBom;
+import com.genertech.consumer.domain.GSZD;
+import com.genertech.consumer.domain.LJZD;
+import com.genertech.consumer.domain.PJZD;
+import com.genertech.consumer.domain.RePartBom;
+import com.genertech.consumer.domain.TZBM;
+import com.genertech.consumer.domain.YXGZTJ;
+
+@Component
+public class ConsumerManager {
+
+    private static final Logger log = LogManager.getLogger(ConsumerManager.class);
+    @Autowired
+    private CZPSMapper          czpsMapper;
+    @Autowired
+    private LjzdMapper          LjzdMapper;
+    @Autowired
+    private YXGZTJMapper        yxzgtjMapper;
+    @Autowired
+    private CmPartBomMapper     cmPartBomMapper;
+    @Autowired
+    private BaseDaoService      daoService;
+
+    /**
+     * @Description:车组信息
+     * @author Administrator
+     * @version 1.0
+     * @date 2019年5月16日 下午1:15:56
+     * @param message
+     */
+    @JmsListener(destination = Constants.CZPS_QUEUE)
+    public void CZPSConsumer(String message) {
+        try {
+            log.info("CZPS_QUEUE 消费了一条队列消息" + message);
+            List<CZPS> list = JSON.parseArray(message, CZPS.class);
+            List<CZPS> updateList = new ArrayList<>();
+            // Map<String, CPZD> updateCpzdMap = new HashMap<>();
+            Map<String, PJZD> updatePjzdMap = new HashMap<>();
+            Map<String, TZBM> updateTzbmMap = new HashMap<>();
+            // Map<String, CPZD> insertCpzdMap = new HashMap<>();
+            Map<String, PJZD> insertPjzdMap = new HashMap<>();
+            Map<String, TZBM> insertTzbmMap = new HashMap<>();
+            List<Object> insertList = new ArrayList<>();
+            // List<Object> insertCpzdList = new ArrayList<>();
+            List<Object> insertPjzdList = new ArrayList<>();
+            List<Object> insertTzbmList = new ArrayList<>();
+
+            log.info("list size:" + list.size());
+            List<String> czpsIdList = czpsMapper.getIds();
+            List<String> cpzdIdList = czpsMapper.getCpzdIds();
+            List<String> pjzdIdList = czpsMapper.getPjzdIds();
+            List<String> tzdmIdList = czpsMapper.getTzbmIds();
+            for (CZPS cs : list) {
+                if (czpsIdList.contains(cs.getId())) {
+                    updateList.add(cs);
+                } else {
+                    insertList.add(cs);
+                }
+                /*
+                 * if (cpzdIdList.contains(cs.getAA())) { if (updateCpzdMap.get(cs.getAA()) == null) {
+                 * updateCpzdMap.put(cs.getAA(), cs.getCpzd()); } } else { if (insertCpzdMap.get(cs.getAA()) == null) {
+                 * insertCpzdMap.put(cs.getAA(), cs.getCpzd()); } }
+                 */
+                if (pjzdIdList.contains(cs.getAI())) {
+                    if (updatePjzdMap.get(cs.getAI()) == null) {
+                        updatePjzdMap.put(cs.getAI(), cs.getPjzd());
+                    }
+                } else {
+                    if (insertPjzdMap.get(cs.getAI()) == null) {
+                        insertPjzdMap.put(cs.getAI(), cs.getPjzd());
+                    }
+                }
+                if (tzdmIdList.contains(cs.getAC())) {
+                    if (updateTzbmMap.get(cs.getAC()) == null) {
+                        updateTzbmMap.put(cs.getAC(), cs.getTzbm());
+                    }
+                } else {
+                    if (insertTzbmMap.get(cs.getAC()) == null) {
+                        insertTzbmMap.put(cs.getAC(), cs.getTzbm());
+                    }
+                }
+            }
+            /*
+             * if (updateCpzdMap.size() > 0) { for (CPZD cp : updateCpzdMap.values()) { try { if
+             * (Constants.CPZD_TYPE.indexOf(cp.getAB()) != -1) { daoService.updateObject(cp); } else { cp.setZZ("0");
+             * daoService.updateObject(cp); } } catch (Exception e) { log.error("cpzd update error:" +
+             * JSON.toJSONString(cp)); e.printStackTrace(); } } log.info("Cpzd update success ! size: " +
+             * updateCpzdMap.size()); } if (insertCpzdMap.size() > 0) { try { CPZD cpzd = null; for (Map.Entry<String,
+             * CPZD> entry : insertCpzdMap.entrySet()) { if (StringUtils.isNotBlank(entry.getKey())) { cpzd =
+             * entry.getValue(); if (Constants.CPZD_TYPE.indexOf(cpzd.getAB()) != -1) { insertCpzdList.add(cpzd); } else
+             * { cpzd.setZZ("0"); insertCpzdList.add(cpzd); } } } daoService.insertAllObjects(insertCpzdList);
+             * log.info("Cpzd insert success ! size: " + insertCpzdList.size()); } catch (Exception e) {
+             * log.error("Cpzd insert error:" + e); e.printStackTrace(); } }
+             */
+            if (updatePjzdMap.size() > 0) {
+                for (PJZD pj : updatePjzdMap.values()) {
+                    try {
+                        daoService.updateObject(pj);
+                    } catch (Exception e) {
+                        log.error("pjzd update error:" + JSON.toJSONString(pj));
+                        e.printStackTrace();
+                    }
+                }
+                log.info("Pjzd update success ! size: " + updatePjzdMap.size());
+            }
+            if (insertPjzdMap.size() > 0) {
+                try {
+                    for (Map.Entry<String, PJZD> entry : insertPjzdMap.entrySet()) {
+                        if (StringUtils.isNotBlank(entry.getKey())) {
+                            insertPjzdList.add(entry.getValue());
+                        }
+                    }
+                    daoService.insertAllObjects(insertPjzdList);
+                    log.info("Pjzd insert success ! size: " + insertPjzdList.size());
+                } catch (Exception e) {
+                    log.error("Pjzd insert error:" + JSON.toJSONString(insertPjzdList));
+                    e.printStackTrace();
+                }
+            }
+            if (updateTzbmMap.size() > 0) {
+                for (TZBM tz : updateTzbmMap.values()) {
+                    try {
+                        daoService.updateObject(tz);
+                    } catch (Exception e) {
+                        log.error("tzbm update error:" + JSON.toJSONString(tz));
+                        e.printStackTrace();
+                    }
+                }
+                log.info("Tzbm update success ! size: " + updateTzbmMap.size());
+            }
+            if (insertTzbmMap.size() > 0) {
+                try {
+                    for (Map.Entry<String, TZBM> entry : insertTzbmMap.entrySet()) {
+                        if (StringUtils.isNotBlank(entry.getKey())) {
+                            insertTzbmList.add(entry.getValue());
+                        }
+                    }
+                    daoService.insertAllObjects(insertTzbmList);
+                    log.info("Tzbm insert success ! size: " + insertTzbmList.size());
+                } catch (Exception e) {
+                    log.error("Tzbm insert error:" + JSON.toJSONString(insertTzbmList));
+                    e.printStackTrace();
+                }
+            }
+            if (updateList.size() > 0) {
+                for (CZPS cz : updateList) {
+                    try {
+                        daoService.updateObject(cz);
+                    } catch (Exception e) {
+                        log.error("czps update error:" + JSON.toJSONString(cz));
+                        e.printStackTrace();
+                    }
+                }
+                log.info("CZPS update success ! size: " + updateList.size());
+            }
+            if (insertList.size() > 0) {
+                try {
+                    daoService.insertAllObjects(insertList);
+                    log.info("Czps insert success ! size: " + insertList.size());
+                } catch (Exception e) {
+                    log.error("Czps insert error:" + JSON.toJSONString(insertList));
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            log.error("车组信息  队列 处理失败：" + e);
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * @Description:物料数据
+     * @author Administrator
+     * @version 1.0
+     * @date 2019年5月16日 下午1:15:40
+     * @param message
+     */
+    @JmsListener(destination = Constants.LJZD_QUEUE)
+    public void LJZDConsumer(String message) {
+        log.info("LJZD_QUEUE 消费了一条队列消息" + message);
+        try {
+            List<BJZD> list = JSON.parseArray(message, BJZD.class);
+            List<BJZD> updateBjzdList = new ArrayList<>();
+            Map<String, GSZD> updateGszdMap = new HashMap<>();
+            Map<String, LJZD> updateLjzdMap = new HashMap<>();
+            Map<String, GSZD> insertGszdMap = new HashMap<>();
+            Map<String, LJZD> insertLjzdMap = new HashMap<>();
+            List<Object> insertLjzdList = new ArrayList<>();
+            List<Object> insertGszdList = new ArrayList<>();
+            List<Object> insertBjzdList = new ArrayList<>();
+            log.info("list size:" + list.size());
+            List<String> ljzdIdList = LjzdMapper.getIds();
+            List<String> gszdIdList = LjzdMapper.getGszdIds();
+            List<String> bjzdIdList = LjzdMapper.getBjzdIds();
+            for (BJZD lj : list) {
+                if (gszdIdList.contains(lj.getAA())) {
+                    if (updateGszdMap.get(lj.getAA()) == null) {
+                        updateGszdMap.put(lj.getAA(), lj.getGszd());
+                    }
+                } else {
+                    if (insertGszdMap.get(lj.getAA()) == null) {
+                        insertGszdMap.put(lj.getAA(), lj.getGszd());
+                    }
+                }
+                if (ljzdIdList.contains(lj.getAB())) {
+                    if (updateLjzdMap.get(lj.getAB()) == null) {
+                        updateLjzdMap.put(lj.getAB(), lj.getLjzd());
+                    }
+                } else {
+                    if (insertLjzdMap.get(lj.getAB()) == null) {
+                        insertLjzdMap.put(lj.getAB(), lj.getLjzd());
+                    }
+                }
+                if (bjzdIdList.contains(lj.getID())) {
+                    updateBjzdList.add(lj);
+                } else {
+                    insertBjzdList.add(lj);
+                }
+            }
+            if (updateGszdMap.size() > 0) {
+                for (GSZD cp : updateGszdMap.values()) {
+                    try {
+                        daoService.updateObject(cp);
+                    } catch (Exception e) {
+                        log.error("gszd update error:" + JSON.toJSONString(cp));
+                        e.printStackTrace();
+                    }
+                }
+                log.info("GSZD update success ! size: " + updateGszdMap.size());
+            }
+            if (insertGszdMap.size() > 0) {
+                try {
+                    for (Map.Entry<String, GSZD> entry : insertGszdMap.entrySet()) {
+                        if (StringUtils.isNotBlank(entry.getKey())) {
+                            insertGszdList.add(entry.getValue());
+                        }
+                    }
+                    daoService.insertAllObjects(insertGszdList);
+                    log.info("Gszd insert success ! size: " + insertGszdList.size());
+                } catch (Exception e) {
+                    log.error("gszd insert error:" + JSON.toJSONString(insertGszdList));
+                    e.printStackTrace();
+                }
+            }
+            if (updateLjzdMap.size() > 0) {
+                for (LJZD pj : updateLjzdMap.values()) {
+                    try {
+                        daoService.updateObject(pj);
+                    } catch (Exception e) {
+                        log.error("ljzd update error:" + JSON.toJSONString(pj));
+                        e.printStackTrace();
+                    }
+                }
+                log.info("Ljzd update success ! size: " + updateLjzdMap.size());
+            }
+            if (insertLjzdMap.size() > 0) {
+                try {
+                    for (Map.Entry<String, LJZD> entry : insertLjzdMap.entrySet()) {
+                        if (StringUtils.isNotBlank(entry.getKey())) {
+                            insertLjzdList.add(entry.getValue());
+                        }
+                    }
+                    daoService.insertAllObjects(insertLjzdList);
+                    log.info("Ljzd insert success ! size: " + insertLjzdList.size());
+                } catch (Exception e) {
+                    log.error("Ljzd insert error:" + JSON.toJSONString(insertLjzdList));
+                    e.printStackTrace();
+                }
+            }
+            if (updateBjzdList.size() > 0) {
+                for (BJZD cz : updateBjzdList) {
+                    try {
+                        daoService.updateObject(cz);
+                    } catch (Exception e) {
+                        log.error("bjzd update error:" + JSON.toJSONString(cz));
+                        e.printStackTrace();
+                    }
+                }
+                log.info("BJZD update success ! size: " + updateBjzdList.size());
+            }
+            if (insertBjzdList.size() > 0) {
+                try {
+                    daoService.insertAllObjects(insertBjzdList);
+                    log.info("Bjzd insert success ! size: " + insertBjzdList.size());
+                } catch (Exception e) {
+                    log.error("Bjzd insert error:" + JSON.toJSONString(insertBjzdList));
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            log.error("物料数据 队列处理失败：" + e);
+            e.printStackTrace();
+        }
+    }
+
+    @JmsListener(destination = Constants.CM_BOOM_QUEUE)
+    public void CmBoomConsumer(String message) {
+        try {
+            log.info("CM_BOOM_QUEUE 消费了一条队列消息" + message);
+            List<CmPartBom> list = JSON.parseArray(message, CmPartBom.class);
+            log.info("CM_PART_BOOM size:" + list.size());
+            List<CmPartBom> updateList = new ArrayList<>();
+            List<Object> insertList = new ArrayList<>();
+            for (CmPartBom bom : list) {
+                if (StringUtils.isNotBlank(cmPartBomMapper.getById(bom.getID()))) {
+                    updateList.add(bom);
+                } else {
+                    insertList.add(bom);
+                }
+            }
+            if (updateList.size() > 0) {
+                for (CmPartBom cmPartBom : updateList) {
+                    try {
+                        daoService.updateObject(cmPartBom);
+                    } catch (Exception e) {
+                        log.error("cm_part_bom update error:" + JSON.toJSONString(cmPartBom));
+                        e.printStackTrace();
+                    }
+                }
+                log.info("CM_PART_BOM update success ! size: " + updateList.size());
+            }
+            if (insertList.size() > 0) {
+                try {
+                    daoService.insertAllObjects(insertList);
+                    log.info("CM_PART_BOM insert success ! size: " + insertList.size());
+                } catch (Exception e) {
+                    log.error("CM_PART_BOM insert error:" + JSON.toJSONString(insertList));
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            log.error("cm_part_bom 队列处理失败：" + e);
+            e.printStackTrace();
+        }
+    }
+
+    @JmsListener(destination = Constants.RE_BOOM_QUEUE)
+    public void ReBoomConsumer(String message) {
+        try {
+            log.info("RE_BOOM_QUEUE 消费了一条队列消息" + message);
+            List<RePartBom> list = JSON.parseArray(message, RePartBom.class);
+            log.info("RE_PART_BOOM size：" + list.size());
+            List<RePartBom> updateList = new ArrayList<>();
+            List<Object> insertList = new ArrayList<>();
+            for (RePartBom bom : list) {
+                if (StringUtils.isNotBlank(cmPartBomMapper.getReById(bom.getID()))) {
+                    updateList.add(bom);
+                } else {
+                    insertList.add(bom);
+                }
+            }
+            if (updateList.size() > 0) {
+                for (RePartBom bom : updateList) {
+                    try {
+                        daoService.updateObject(bom);
+                    } catch (Exception e) {
+                        log.error("re_part_bom update error:" + JSON.toJSONString(bom));
+                        e.printStackTrace();
+                    }
+                }
+                log.info("RE_PART_BOM update success ! size: " + updateList.size());
+            }
+            if (insertList.size() > 0) {
+                try {
+                    daoService.insertAllObjects(insertList);
+                    log.info("RE_PART_BOM insert success ! size: " + insertList.size());
+                } catch (Exception e) {
+                    log.error("RE_PART_BOM insert error:" + JSON.toJSONString(insertList));
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            log.error("re_part_bom 队列处理失败：" + e);
+            e.printStackTrace();
+        }
+    }
+
+    @JmsListener(destination = Constants.YXGZTJ_QUEUE)
+    public void YXZGTJConsumer(String message) {
+        log.info("YXGZTJ_QUEUE 消费了一条队列消息" + message);
+        try {
+            List<YXGZTJ> list = JSON.parseArray(message, YXGZTJ.class);
+            log.info("list size:" + list.size());
+            List<YXGZTJ> updateList = new ArrayList<>();
+            List<Object> insertList = new ArrayList<>();
+            for (YXGZTJ yx : list) {
+                if (StringUtils.isNotBlank(yxzgtjMapper.getById(yx.getAA()))) {
+                    updateList.add(yx);
+                } else {
+                    insertList.add(yx);
+                }
+            }
+            if (updateList.size() > 0) {
+                for (YXGZTJ yj : updateList) {
+                    try {
+                        daoService.updateObject(yj);
+                    } catch (Exception e) {
+                        log.error("yxgztj update error:" + JSON.toJSONString(yj));
+                        e.printStackTrace();
+                    }
+                }
+                log.info("YXGZTJ update success ! size: " + updateList.size());
+            }
+            if (insertList.size() > 0) {
+                try {
+                    daoService.insertAllObjects(insertList);
+                    log.info("YXGZTJ insert success ! size: " + insertList.size());
+                } catch (Exception e) {
+                    log.error("YXGZTJ insert error:" + JSON.toJSONString(insertList));
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            log.error("安监报故障  队列处理失败：" + e);
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        String str = "[{\"id\":null,\"cpzd\":{\"id\":\"D301\",\"aa\":\"000005\",\"ab\":\"CRH380BL\",\"ac\":null,\"af\":\"2\",\"ag\":350,\"ah\":\"010000\",\"ai\":\"010300\",\"aj\":1043,\"ad\":\"test\",\"ae\":null,\"zv\":null,\"zw\":\"2017-06-29 10:57:36.0\",\"zx\":\"ckadmin \",\"zy\":\"ckadmin \",\"zz\":\"1\",\"ba\":\"T13\",\"ak\":30,\"al\":18400,\"am\":6500,\"an\":24175,\"ao\":3265,\"ap\":3890,\"aq\":1260,\"ar\":17,\"au\":\"CRH3\"},\"pjzd\":{\"id\":\"0000000008\",\"isparent\":null,\"aa\":\"A-3003\",\"ab\":\"时速350公里动车组项目\",\"ac\":\"000001\",\"af\":null,\"ag\":null,\"ad\":null,\"ae\":null,\"zv\":\"2017-11-10 08:08:22.0\",\"zw\":\"2019-05-16 12:40:55.0\",\"zx\":\"ckadmin\",\"zy\":\"system\",\"zz\":\"1\",\"bb\":\"D301\",\"pid\":\"A-3059\"},\"tzbm\":{\"id\":\"010000    \",\"aa\":\"铁路总公司\",\"ab\":null,\"ac\":null,\"zv\":null,\"zw\":null,\"zx\":null,\"zy\":null,\"zz\":\"1\"},\"aa\":\"D301\",\"ab\":\"1K1300510140000\",\"ac\":\"010000    \",\"af\":\"1\",\"ag\":\"5508\",\"ah\":\"5508\",\"ai\":\"0000000008\",\"aj\":null,\"ad\":\"2011-04-30 00:00:00.0\",\"ae\":\"2012-10-21 00:00:00.0\",\"zv\":\"2016-01-13 09:35:04.0\",\"zw\":\"2017-10-12 16:19:33.0\",\"zx\":\"ckadmin\",\"zy\":\"ckadmin\",\"zz\":\"1\",\"ba\":null,\"bf\":null,\"ak\":\"000005\",\"al\":100000,\"sa\":null,\"sb\":\"1005\",\"ca\":\"CRHL5508\",\"cb\":\"8\",\"ft\":\"T13\",\"bb\":4359003,\"bc\":-2280}]";
+        String aa = "[{\"id\":\"D303050124\",\"cpzd\":{\"id\":\"D303\",\"aa\":\"000005\",\"ab\":\"CRH380BG\",\"ac\":null,\"af\":\"1\",\"ag\":350,\"ah\":\"010100\",\"ai\":\"010400\",\"aj\":551,\"ad\":null,\"ae\":null,\"zv\":null,\"zw\":\"2019-02-14 10:58:09.0\",\"zx\":\"ckadmin \",\"zy\":\"ckadmin \",\"zz\":\"1\",\"ba\":\"T15\",\"ak\":null,\"al\":9200,\"am\":6500,\"an\":25000,\"ao\":3257,\"ap\":3890,\"aq\":1260,\"ar\":17,\"au\":\"CRH3\"},\"pjzd\":{\"id\":\"0000000003\",\"aa\":\"A-3015\",\"ab\":\"CRH380B高寒车项目\",\"ac\":\"000001\",\"af\":null,\"ag\":null,\"ad\":null,\"ae\":null,\"zv\":\"2018-11-27 15:04:11.0\",\"zw\":\"2019-05-16 12:40:01.0\",\"zx\":\"ckadmin\",\"zy\":\"system\",\"zz\":\"1\",\"bb\":\"D303\",\"isparent\":null,\"pid\":\"A-3061\"},\"tzbm\":{\"id\":\"010000    \",\"aa\":\"铁路总公司\",\"ab\":null,\"ac\":null,\"zv\":null,\"zw\":null,\"zx\":null,\"zy\":null,\"zz\":\"1\"},\"aa\":\"D303\",\"ab\":\"1K1300510090000\",\"ac\":\"010000    \",\"af\":\"1\",\"ag\":\"5546\",\"ah\":\"5546\",\"ai\":\"0000000003\",\"aj\":null,\"ad\":1324828800000,\"ae\":1371484800000,\"zv\":1452648904000,\"zw\":1550108974000,\"zx\":\"ckadmin\",\"zy\":\"ckadmin\",\"zz\":\"1\",\"ba\":null,\"bf\":\"00000000000000000011\",\"ak\":\"000005\",\"al\":100000,\"sa\":null,\"sb\":\"551\",\"ca\":\"CRHB5546\",\"cb\":\"1\",\"ft\":\"T15\",\"bb\":3682400,\"bc\":28767}]";
+        /*
+         * List<CZPS> list = JSON.parseArray(aa, CZPS.class); System.out.println(list.size()); for (CZPS cs : list) {
+         * System.out.println(DateUtils.dateToString1(cs.getAD()));
+         * System.out.println(DateUtils.dateToString2(cs.getZW())); }
+         */
+        String sd = "CR400BF";
+        System.out.println(Constants.CPZD_TYPE.indexOf(sd));
+    }
+
+}

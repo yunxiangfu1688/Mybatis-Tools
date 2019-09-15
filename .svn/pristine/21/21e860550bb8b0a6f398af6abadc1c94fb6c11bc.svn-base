@@ -1,0 +1,92 @@
+package com.genertech.controller;
+
+import com.alibaba.fastjson.JSON;
+import com.genertech.common.base.service.BaseDaoService;
+import com.genertech.common.utils.Identities;
+import com.genertech.consumer.ConsumerManager;
+import com.genertech.consumer.domain.CPZD;
+import com.genertech.consumer.domain.CZPS;
+import com.genertech.prognostics.pojo.Prognostics;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import org.apache.activemq.command.ActiveMQQueue;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.jms.Queue;
+import java.util.*;
+
+@RestController
+public class TestController {
+
+    @Autowired
+    private ConsumerManager consumerManager;
+    @Autowired
+    private BaseDaoService daoService;
+
+    private Queue getQueue(String queueName) {
+        return new ActiveMQQueue(queueName);
+    }
+
+    @RequestMapping("/queue")
+    public String queue() {
+        System.out.println(consumerManager);
+        String message = "我是消息内容, " + System.currentTimeMillis();
+        // Destination destination = getQueue(Constants.MATERIAL_QUEUE);
+        // template.convertAndSend(destination, message);
+        return "success";
+    }
+
+    @RequestMapping("/test")
+    public int test() {
+        String message = "我是消息内容, " + System.currentTimeMillis();
+        Map<String, Object> map = null;
+        return 0;
+    }
+    @RequestMapping("/list")
+    public Object list(){
+        Map<String, Object> params = new HashMap<>();
+        List li = new ArrayList();
+        li.add("D501050014");
+        li.add("D303050075");
+        params.put("ids",li);
+//        List list = daoService.list("select id,aa from czps where id in #{ids}",params, CZPSDO.class);
+//        CZPSDO ss = new CZPSDO();
+//        daoService.insertObject(ss);
+        return null;
+    }
+    @RequestMapping("/insert")
+    public Object insert(){
+        Prognostics prognostics = new Prognostics();
+        prognostics.setId(Identities.uuid());
+        prognostics.setCreateTime(new Date());
+        prognostics.setModelCode("DB01");
+
+        Prognostics prognostics2 = new Prognostics();
+        prognostics2.setId(Identities.uuid());
+        prognostics2.setCreateTime(new Date());
+        prognostics2.setModelCode("DB01");
+
+        Prognostics prognostics3 = new Prognostics();
+        prognostics3.setId(Identities.uuid());
+        prognostics3.setCreateTime(new Date());
+        prognostics3.setModelCode("DB01");
+        prognostics3.setCreateTime(new Date());
+
+        List list = new ArrayList();
+        list.add(prognostics);
+        list.add(prognostics2);
+        list.add(prognostics3);
+        list.clear();
+        String json = "[{\"id\":\"D303\",\"aa\":\"000005\",\"ab\":\"CRH380BG\",\"ac\":null,\"af\":\"1\",\"ag\":350,\"ah\":\"010100\",\"ai\":\"010400\",\"aj\":551,\"ad\":null,\"ae\":null,\"zv\":null,\"zw\":1550113089000,\"zx\":\"ckadmin \",\"zy\":\"ckadmin \",\"zz\":\"1\",\"ba\":\"T15\",\"ak\":null,\"al\":9200,\"am\":6500,\"an\":25000,\"ao\":3257,\"ap\":3890,\"ar\":17,\"au\":\"CRH3\",\"aq\":1260}]";
+//        JSONObject jsonObject = JSONObject.fromObject(data);
+        List list2 = JSON.parseArray(json, CPZD.class);
+        //批量添加
+        daoService.insertObjects(list2,2);
+        //批量更新
+//        daoService.updateObjects(list);
+
+        return "1";
+    }
+}

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yxf.common.base.dao.BaseMapper" >
+    <insert id="insert" parameterType="java.util.Map">
+        INSERT INTO ${TABLE_NAME} (
+        <foreach collection="dataMap.keys" item="key" index="index" separator=",">
+            ${key}
+        </foreach>
+        ) values (
+        <foreach collection="dataMap.keys" item="key" index="index" separator=",">
+            #{dataMap[${key}]}
+        </foreach>
+        )
+    </insert>
+    <insert id="insertBath" useGeneratedKeys="false">
+        INSERT INTO ${TABLE_NAME} (
+        <foreach collection="columns" item="column" index="index" separator=",">
+            ${column}
+        </foreach>
+        )
+        <foreach collection="dataList" item="item" index="index" separator="union all" >
+            select
+            <!--<foreach collection="item" item="column" index="key" separator=",">-->
+            <!--#{column}-->
+            <!--</foreach>-->
+            <foreach collection="columns" item="column" separator=",">
+                <choose>
+                    <when test="item['_SQL_'+column] != null">${item['_SQL_'+column]}</when>
+                    <when test="item[column] == null">null</when>
+                    <otherwise>#{item.${column}}</otherwise>
+                </choose>
+            </foreach>
+            from dual
+        </foreach>
+    </insert>
+    <insert id="insertAllBath" useGeneratedKeys="false">
+        INSERT ALL
+        <foreach collection="dataList" item="item" index="index">
+            INTO ${item.TABLE_NAME} (
+            <foreach collection="item.dataMap.keys" item="key" separator=",">
+                <if test='!key.startsWith("_SQL_")'>
+                    ${key}
+                </if>
+            </foreach>
+            )values(
+            <!--<foreach collection="item.dataMap" item="value" separator=",">-->
+            <!--#{value}-->
+            <!--</foreach>-->
+            <foreach collection="item.dataMap.keys" item="column" separator=",">
+                <if test='!column.startsWith("_SQL_")'>
+                    <choose>
+                        <when test="item.dataMap['_SQL_'+column] != null">${item.dataMap['_SQL_'+column]}</when>
+                        <otherwise>#{item.dataMap.${column}}</otherwise>
+                    </choose>
+                </if>
+            </foreach>
+            )
+        </foreach>
+        SELECT 1 FROM DUAL
+    </insert>
+    <update id="updateBath" useGeneratedKeys="false">
+        UPDATE ${TABLE_NAME} T SET(
+        <foreach collection="columns" item="column" index="index" separator=",">
+            ${column}
+        </foreach>
+        )=(
+        <foreach collection="dataList" item="item" separator="union all">
+            select
+            <foreach collection="columns" item="column" separator=",">
+                <choose>
+                    <when test="item['_SQL_'+column] != null">${item['_SQL_'+column]}</when>
+                    <when test="item[column] == null">T.${column}</when>
+                    <!--<when test="item[column] != null and (allSqlColumn or (sqlColumns != null and sqlColumns.contains(column)))">${item[column]}</when>-->
+                    <otherwise>#{item.${column}}</otherwise>
+                </choose>
+            </foreach>
+            from dual where T.${KEY_ID}=#{item.${KEY_ID}}
+        </foreach>
+        ) WHERE T.${KEY_ID} in
+        <foreach collection="dataList" item="item" index="index" open="(" close=")" separator=",">
+            #{item.${KEY_ID}}
+        </foreach>
+        <if test="where!=null">and ${where}</if>
+    </update>
+    <update id="update" parameterType="java.util.Map">
+        update ${TABLE_NAME} set
+        <foreach collection="dataMap.keys" item="key" index="index" separator=",">
+            ${key}=#{dataMap[${key}]}
+        </foreach>
+        where ${KEY_ID}=#{KEY_VALUE}
+    </update>
+    <select id="list" parameterType="java.util.Map" resultType="hashmap">
+        ${SQL}
+    </select>
+    <delete id="delete" parameterType="java.util.Map">
+        delete ${TABLE_NAME} where ${KEY_ID}=#{KEY_VALUE}
+    </delete>
+    <delete id="execute" parameterType="java.util.Map">
+        ${SQL}
+    </delete>
+</mapper>

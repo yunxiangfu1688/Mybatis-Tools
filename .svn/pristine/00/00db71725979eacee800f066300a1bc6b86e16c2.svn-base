@@ -1,0 +1,10 @@
+package com.genertech.phm.services;
+
+import com.genertech.phm.pojo.Prognostics;
+
+import java.util.List;
+
+public interface PrognosticsService {
+
+    public void addPrognostics(List<Prognostics> prognosticss);
+}

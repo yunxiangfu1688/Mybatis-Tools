@@ -1,0 +1,20 @@
+package com.genertech.prognostics.services;
+
+import com.genertech.common.base.service.BaseDaoService;
+import com.genertech.prognostics.pojo.Prognostics;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class PrognosticsServiceImpl implements PrognosticsService {
+
+    @Autowired
+    BaseDaoService daoService;
+
+    @Override
+    public void addPrognostics(List<Prognostics> prognosticss) {
+        daoService.insertObject(prognosticss);
+    }
+}

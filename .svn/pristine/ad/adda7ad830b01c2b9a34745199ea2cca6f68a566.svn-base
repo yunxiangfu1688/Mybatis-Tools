@@ -1,0 +1,326 @@
+package com.genertech.consumer.domain;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
+
+import com.genertech.common.base.annotation.Column;
+import com.genertech.common.base.annotation.Id;
+import com.genertech.common.base.annotation.Table;
+
+/**
+ * @Description:车组信息
+ * @project ASSM-DATA
+ * @class CZPSDO.java
+ * @author Administrator
+ * @version 1.0
+ * @date 2019年5月14日 下午3:00:33
+ */
+@Table("CZPS_TEST")
+public class CZPS implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id(value = "ID")
+    private String            id;                   // 车组编码
+    @Column(value = "AA")
+    private String            AA;                   // 车型名称
+    @Column(value = "AB")
+    private String            AB;                   // 配属服务站
+    @Column(value = "AC")
+    private String            AC;                   // 铁总部门编码
+    @Column(value = "AD")
+    private Date              AD;                   // 出厂日期
+    @Column(value = "AE")
+    private Date              AE;                   // 质保截止日期
+    @Column(value = "AF")
+    private String            AF;                   // 使用状态
+    @Column(value = "AG")
+    private String            AG;                   // 车组号
+    @Column(value = "AH")
+    private String            AH;                   // 车组号2
+    @Column(value = "AI")
+    private String            AI;                   // 项目编号
+    @Column(value = "AJ")
+    private String            AJ;                   // 质保条款
+    @Column(value = "ZV")
+    private Date              ZV;                   // 创建时间
+    @Column(value = "ZW")
+    private Date              ZW;                   // 修改时间
+    @Column(value = "ZX")
+    private String            ZX;                   // 创建人
+    @Column(value = "ZY")
+    private String            ZY;                   // 修改人
+    @Column(value = "ZZ")
+    private String            ZZ;                   // 启用标记
+    @Column(value = "BA")
+    private String            BA;                   // 配属历史
+    @Column(value = "BF")
+    private String            BF;                   // 车型版本
+    @Column(value = "AK")
+    private String            AK;                   // 制造商
+    @Column(value = "AL")
+    private BigDecimal        AL;                   // 走行公里阀值
+    @Column(value = "SA")
+    private String            SA;                   // 配属所
+    @Column(value = "SB")
+    private String            SB;                   // 座位数
+    @Column(value = "CA")
+    private String            CA;                   // sap名称
+    @Column(value = "CB")
+    private String            CB;                   // 列份
+    @Column(value = "FT")
+    private String            FT;                   // 系统版本
+    @Column(value = "BB")
+    private BigDecimal        BB;                   // 累计公里数
+    @Column(value = "BC")
+    private BigDecimal        BC;                   // 公里数差值
+    // 外键信息
+    // 外键信息
+    // CPZD
+    private CPZD              cpzd;
+    // pjzd
+    private PJZD              pjzd;
+    // tzbm
+    private TZBM              tzbm;
+
+    public CPZD getCpzd() {
+        return cpzd;
+    }
+
+    public void setCpzd(CPZD cpzd) {
+        this.cpzd = cpzd;
+    }
+
+    public PJZD getPjzd() {
+        return pjzd;
+    }
+
+    public void setPjzd(PJZD pjzd) {
+        this.pjzd = pjzd;
+    }
+
+    public TZBM getTzbm() {
+        return tzbm;
+    }
+
+    public void setTzbm(TZBM tzbm) {
+        this.tzbm = tzbm;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getAA() {
+        return AA;
+    }
+
+    public void setAA(String aA) {
+        AA = aA;
+    }
+
+    public String getAB() {
+        return AB;
+    }
+
+    public void setAB(String aB) {
+        AB = aB;
+    }
+
+    public String getAC() {
+        return AC;
+    }
+
+    public void setAC(String aC) {
+        AC = aC;
+    }
+
+    public String getAF() {
+        return AF;
+    }
+
+    public void setAF(String aF) {
+        AF = aF;
+    }
+
+    public String getAG() {
+        return AG;
+    }
+
+    public void setAG(String aG) {
+        AG = aG;
+    }
+
+    public String getAH() {
+        return AH;
+    }
+
+    public void setAH(String aH) {
+        AH = aH;
+    }
+
+    public String getAI() {
+        return AI;
+    }
+
+    public void setAI(String aI) {
+        AI = aI;
+    }
+
+    public String getAJ() {
+        return AJ;
+    }
+
+    public void setAJ(String aJ) {
+        AJ = aJ;
+    }
+
+    public Date getAD() {
+        return AD;
+    }
+
+    public void setAD(Date aD) {
+        AD = aD;
+    }
+
+    public Date getAE() {
+        return AE;
+    }
+
+    public void setAE(Date aE) {
+        AE = aE;
+    }
+
+    public Date getZV() {
+        return ZV;
+    }
+
+    public void setZV(Date zV) {
+        ZV = zV;
+    }
+
+    public Date getZW() {
+        return ZW;
+    }
+
+    public void setZW(Date zW) {
+        ZW = zW;
+    }
+
+    public String getZX() {
+        return ZX;
+    }
+
+    public void setZX(String zX) {
+        ZX = zX;
+    }
+
+    public String getZY() {
+        return ZY;
+    }
+
+    public void setZY(String zY) {
+        ZY = zY;
+    }
+
+    public String getZZ() {
+        return ZZ;
+    }
+
+    public void setZZ(String zZ) {
+        ZZ = zZ;
+    }
+
+    public String getBA() {
+        return BA;
+    }
+
+    public void setBA(String bA) {
+        BA = bA;
+    }
+
+    public String getBF() {
+        return BF;
+    }
+
+    public void setBF(String bF) {
+        BF = bF;
+    }
+
+    public String getAK() {
+        return AK;
+    }
+
+    public void setAK(String aK) {
+        AK = aK;
+    }
+
+    public BigDecimal getAL() {
+        return AL;
+    }
+
+    public void setAL(BigDecimal aL) {
+        AL = aL;
+    }
+
+    public String getSA() {
+        return SA;
+    }
+
+    public void setSA(String sA) {
+        SA = sA;
+    }
+
+    public String getSB() {
+        return SB;
+    }
+
+    public void setSB(String sB) {
+        SB = sB;
+    }
+
+    public String getCA() {
+        return CA;
+    }
+
+    public void setCA(String cA) {
+        CA = cA;
+    }
+
+    public String getCB() {
+        return CB;
+    }
+
+    public void setCB(String cB) {
+        CB = cB;
+    }
+
+    public String getFT() {
+        return FT;
+    }
+
+    public void setFT(String fT) {
+        FT = fT;
+    }
+
+    public BigDecimal getBB() {
+        return BB;
+    }
+
+    public void setBB(BigDecimal bB) {
+        BB = bB;
+    }
+
+    public BigDecimal getBC() {
+        return BC;
+    }
+
+    public void setBC(BigDecimal bC) {
+        BC = bC;
+    }
+
+}

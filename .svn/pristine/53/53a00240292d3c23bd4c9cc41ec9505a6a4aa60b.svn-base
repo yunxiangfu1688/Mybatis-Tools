@@ -1,0 +1,449 @@
+package com.genertech.consumer.domain;
+
+import java.io.Serializable;
+
+/**
+ * @Description:安监报故障
+ * @project ASSM-DATA
+ * @class CZPSDO.java
+ * @author Administrator
+ * @version 1.0
+ * @date 2019年5月14日 下午3:00:33
+ */
+public class YXGZTJ implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    private String            AA;                   // ID
+    private String            AC;                   // 日期
+    private String            AD;                   // 车次
+    private String            AE;                   // 故障发生区间
+    private String            AF;                   // 发生局
+    private String            AG;                   // 配属服务站
+    private String            AH;                   // 车型
+    private String            AI;                   // 车组号
+    private String            AJ;                   // 车辆号
+    private String            AK;                   // 所属系统
+    private String            AL;                   // 故障描述
+    private String            AM;                   // 故障影响
+    private String            AN;                   // 是否安监报(初步)
+    private String            AO;                   // 是否事故
+    private String            AP;                   // 修程
+    private String            AQ;                   // 故障里程
+    private String            AR;                   // 跟踪人
+    private String            AT;                   // 故障原因
+    private String            AU;                   // 类型
+    private String            AV;                   // 应急处理办法
+    private String            AW;                   // 责任单位(外)
+    private String            BA;                   // 创建人
+    private String            BB;                   // 创建时间
+    private String            BC;                   // 更新人
+    private String            BD;                   // 更新时间
+    private String            AB;                   // 是否车辆原因
+    private String            AX;                   // 状态
+    private String            AY;                   // 序号
+    private String            BE;                   // 故障性质
+    private String            BF;                   // 故障部件
+    private String            BG;                   // 服务站处理情况
+    private String            BJ;                   // 问题类别
+    private String            BM;                   // 奖局
+    private String            BL;                   // 扣局
+    private String            BH;                   // 初步报告
+    private String            BK;                   // 关闭报告
+    private String            BN;                   // 特局
+    private String            BO;                   // 责任单位(内)
+    private String            BP;                   // 上次高级修日期
+    private String            BQ;                   // 故障状态
+    private String            BR;                   // 专项责任部门
+    private String            BS;                   // 主体责任部门
+    private String            BT;                   // 修程类别
+    private String            BU;                   // 定责日期
+    private String            BV;                   // 部件供应商
+    private String            BW;                   // 是否安监报(最终)
+    private String            BX;                   // 折算后影响类别
+    private String            ACCIDENT_TYPE;        // 事故类型
+
+    public String getAA() {
+        return AA;
+    }
+
+    public void setAA(String aA) {
+        AA = aA;
+    }
+
+    public String getAC() {
+        return AC;
+    }
+
+    public void setAC(String aC) {
+        AC = aC;
+    }
+
+    public String getAD() {
+        return AD;
+    }
+
+    public void setAD(String aD) {
+        AD = aD;
+    }
+
+    public String getAE() {
+        return AE;
+    }
+
+    public void setAE(String aE) {
+        AE = aE;
+    }
+
+    public String getAF() {
+        return AF;
+    }
+
+    public void setAF(String aF) {
+        AF = aF;
+    }
+
+    public String getAG() {
+        return AG;
+    }
+
+    public void setAG(String aG) {
+        AG = aG;
+    }
+
+    public String getAH() {
+        return AH;
+    }
+
+    public void setAH(String aH) {
+        AH = aH;
+    }
+
+    public String getAI() {
+        return AI;
+    }
+
+    public void setAI(String aI) {
+        AI = aI;
+    }
+
+    public String getAJ() {
+        return AJ;
+    }
+
+    public void setAJ(String aJ) {
+        AJ = aJ;
+    }
+
+    public String getAK() {
+        return AK;
+    }
+
+    public void setAK(String aK) {
+        AK = aK;
+    }
+
+    public String getAL() {
+        return AL;
+    }
+
+    public void setAL(String aL) {
+        AL = aL;
+    }
+
+    public String getAM() {
+        return AM;
+    }
+
+    public void setAM(String aM) {
+        AM = aM;
+    }
+
+    public String getAN() {
+        return AN;
+    }
+
+    public void setAN(String aN) {
+        AN = aN;
+    }
+
+    public String getAO() {
+        return AO;
+    }
+
+    public void setAO(String aO) {
+        AO = aO;
+    }
+
+    public String getAP() {
+        return AP;
+    }
+
+    public void setAP(String aP) {
+        AP = aP;
+    }
+
+    public String getAQ() {
+        return AQ;
+    }
+
+    public void setAQ(String aQ) {
+        AQ = aQ;
+    }
+
+    public String getAR() {
+        return AR;
+    }
+
+    public void setAR(String aR) {
+        AR = aR;
+    }
+
+    public String getAT() {
+        return AT;
+    }
+
+    public void setAT(String aT) {
+        AT = aT;
+    }
+
+    public String getAU() {
+        return AU;
+    }
+
+    public void setAU(String aU) {
+        AU = aU;
+    }
+
+    public String getAV() {
+        return AV;
+    }
+
+    public void setAV(String aV) {
+        AV = aV;
+    }
+
+    public String getAW() {
+        return AW;
+    }
+
+    public void setAW(String aW) {
+        AW = aW;
+    }
+
+    public String getBA() {
+        return BA;
+    }
+
+    public void setBA(String bA) {
+        BA = bA;
+    }
+
+    public String getBB() {
+        return BB;
+    }
+
+    public void setBB(String bB) {
+        BB = bB;
+    }
+
+    public String getBC() {
+        return BC;
+    }
+
+    public void setBC(String bC) {
+        BC = bC;
+    }
+
+    public String getBD() {
+        return BD;
+    }
+
+    public void setBD(String bD) {
+        BD = bD;
+    }
+
+    public String getAB() {
+        return AB;
+    }
+
+    public void setAB(String aB) {
+        AB = aB;
+    }
+
+    public String getAX() {
+        return AX;
+    }
+
+    public void setAX(String aX) {
+        AX = aX;
+    }
+
+    public String getAY() {
+        return AY;
+    }
+
+    public void setAY(String aY) {
+        AY = aY;
+    }
+
+    public String getBE() {
+        return BE;
+    }
+
+    public void setBE(String bE) {
+        BE = bE;
+    }
+
+    public String getBF() {
+        return BF;
+    }
+
+    public void setBF(String bF) {
+        BF = bF;
+    }
+
+    public String getBG() {
+        return BG;
+    }
+
+    public void setBG(String bG) {
+        BG = bG;
+    }
+
+    public String getBJ() {
+        return BJ;
+    }
+
+    public void setBJ(String bJ) {
+        BJ = bJ;
+    }
+
+    public String getBM() {
+        return BM;
+    }
+
+    public void setBM(String bM) {
+        BM = bM;
+    }
+
+    public String getBL() {
+        return BL;
+    }
+
+    public void setBL(String bL) {
+        BL = bL;
+    }
+
+    public String getBH() {
+        return BH;
+    }
+
+    public void setBH(String bH) {
+        BH = bH;
+    }
+
+    public String getBK() {
+        return BK;
+    }
+
+    public void setBK(String bK) {
+        BK = bK;
+    }
+
+    public String getBN() {
+        return BN;
+    }
+
+    public void setBN(String bN) {
+        BN = bN;
+    }
+
+    public String getBO() {
+        return BO;
+    }
+
+    public void setBO(String bO) {
+        BO = bO;
+    }
+
+    public String getBP() {
+        return BP;
+    }
+
+    public void setBP(String bP) {
+        BP = bP;
+    }
+
+    public String getBQ() {
+        return BQ;
+    }
+
+    public void setBQ(String bQ) {
+        BQ = bQ;
+    }
+
+    public String getBR() {
+        return BR;
+    }
+
+    public void setBR(String bR) {
+        BR = bR;
+    }
+
+    public String getBS() {
+        return BS;
+    }
+
+    public void setBS(String bS) {
+        BS = bS;
+    }
+
+    public String getBT() {
+        return BT;
+    }
+
+    public void setBT(String bT) {
+        BT = bT;
+    }
+
+    public String getBU() {
+        return BU;
+    }
+
+    public void setBU(String bU) {
+        BU = bU;
+    }
+
+    public String getBV() {
+        return BV;
+    }
+
+    public void setBV(String bV) {
+        BV = bV;
+    }
+
+    public String getBW() {
+        return BW;
+    }
+
+    public void setBW(String bW) {
+        BW = bW;
+    }
+
+    public String getBX() {
+        return BX;
+    }
+
+    public void setBX(String bX) {
+        BX = bX;
+    }
+
+    public String getACCIDENT_TYPE() {
+        return ACCIDENT_TYPE;
+    }
+
+    public void setACCIDENT_TYPE(String aCCIDENT_TYPE) {
+        ACCIDENT_TYPE = aCCIDENT_TYPE;
+    }
+
+}

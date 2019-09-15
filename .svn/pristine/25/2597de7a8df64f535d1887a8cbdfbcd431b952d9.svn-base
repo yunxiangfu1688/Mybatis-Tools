@@ -1,0 +1,37 @@
+package com.genertech.common;
+
+public interface Constants {
+
+    String MATERIAL_QUEUE  = "MATERIAL_QUEUE";
+    String CZPS_QUEUE      = "CZPS.QUEUE";
+    String LJZD_QUEUE      = "LJZD.QUEUE";
+    String YXZTJ_QUEUE     = "YXZTJ.QUEUE";
+    String CM_BOOM_QUEUE   = "CM_BOOM.QUEUE";
+    String RE_BOOM_QUEUE   = "RE_BOOM.QUEUE";
+
+    String TABLE_CZPS      = "CZPS_TEST";
+
+    String TABLE_CPZD      = "CPZD_TEST";
+
+    String TABLE_PJZD      = "PJZD_TEST";
+
+    String TABLE_TZBM      = "TZBM_TEST";
+
+    /**
+     * PHM预测故障
+     */
+    String PHM_PROGNOSIS_TOPIC = "PHM_PROGNOSIS_TOPIC";
+    /**
+     * PHM TTF（寿命件次数）
+     */
+    String PHM_TTF_TOPIC = "PHM_TTF_TOPIC";
+    /**
+     * PHM-车轮磨耗规律数据
+     */
+    String PHM_WHEEL_ABRASION_LAW_TOPIC = "PHM_WHEEL_ABRASION_LAW_TOPIC";
+    /**
+     * 轮对尺寸到限数据
+     */
+    String PHM_WHEEL_SIZE_LIMIT_HIS_TOPIC = "PHM_WHEEL_SIZE_LIMIT_HIS_TOPIC";
+
+}

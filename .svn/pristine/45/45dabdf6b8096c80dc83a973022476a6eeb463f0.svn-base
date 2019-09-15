@@ -1,0 +1,113 @@
+/**
+ * Copyright(c) 2017-2018 NIOS, All Rights Reserved. Project: NRA-DATA Author: Administrator Createdate: 2019年5月17日
+ * 上午11:07:00 Version: 1.0
+ */
+package com.genertech.consumer.domain;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import com.genertech.common.base.annotation.Column;
+import com.genertech.common.base.annotation.Id;
+import com.genertech.common.base.annotation.Table;
+
+/**
+ * @Description:
+ * @project NRA-DATA
+ * @class TZBM.java
+ * @author Administrator
+ * @version 1.0
+ * @date 2019年5月17日 上午11:07:00
+ */
+@Table("TZBM")
+public class TZBM implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id(value = "ID")
+    private String            ID;                   // 铁总部门编码
+    @Column(value = "AA")
+    private String            AA;                   // 铁总部门名称
+    private String            AB;                   // 铁总对应码1
+    private String            AC;                   // 铁总对应码2
+    // @Column(value = "ZV")
+    private Date              ZV;                   // 创建时间
+    // @Column(value = "ZW")
+    private Date              ZW;                   // 修改时间
+    private String            ZX;                   // 创建人
+    private String            ZY;                   // 修改人
+    @Column(value = "ZZ")
+    private String            ZZ;                   // 启用标记
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String iD) {
+        ID = iD;
+    }
+
+    public String getAA() {
+        return AA;
+    }
+
+    public void setAA(String aA) {
+        AA = aA;
+    }
+
+    public String getAB() {
+        return AB;
+    }
+
+    public void setAB(String aB) {
+        AB = aB;
+    }
+
+    public String getAC() {
+        return AC;
+    }
+
+    public void setAC(String aC) {
+        AC = aC;
+    }
+
+    public Date getZV() {
+        return ZV;
+    }
+
+    public void setZV(Date zV) {
+        ZV = zV;
+    }
+
+    public Date getZW() {
+        return ZW;
+    }
+
+    public void setZW(Date zW) {
+        ZW = zW;
+    }
+
+    public String getZX() {
+        return ZX;
+    }
+
+    public void setZX(String zX) {
+        ZX = zX;
+    }
+
+    public String getZY() {
+        return ZY;
+    }
+
+    public void setZY(String zY) {
+        ZY = zY;
+    }
+
+    public String getZZ() {
+        return ZZ;
+    }
+
+    public void setZZ(String zZ) {
+        ZZ = zZ;
+    }
+
+}

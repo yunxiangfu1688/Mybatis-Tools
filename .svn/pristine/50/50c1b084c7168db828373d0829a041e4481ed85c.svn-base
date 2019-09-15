@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.genertech.common.base.dao.BaseMapper" >
+    <insert id="insert" parameterType="java.util.Map">
+        INSERT INTO ${TABLE_NAME} (
+        <foreach collection="dataMap.keys" item="key" index="index" separator=",">
+            ${key}
+        </foreach>
+        ) values (
+        <foreach collection="dataMap.keys" item="key" index="index" separator=",">
+            #{dataMap[${key}]}
+        </foreach>
+        )
+    </insert>
+    <insert id="insertBath" useGeneratedKeys="false">
+        INSERT INTO ${TABLE_NAME} (
+        <foreach collection="columns" item="column" index="index" separator=",">
+            ${column}
+        </foreach>
+        )
+        <foreach collection="dataList" item="item" index="index" separator="union all" >
+            select
+            <foreach collection="item" item="column" index="key" separator=",">
+                #{column}
+            </foreach>
+            from dual
+        </foreach>
+    </insert>
+    <update id="updateBath" useGeneratedKeys="false">
+        UPDATE ${TABLE_NAME} T SET(
+        <foreach collection="columns" item="column" index="index" separator=",">
+            ${column}
+        </foreach>
+        )=(
+        <foreach collection="dataList" item="item" index="index" separator="union all">
+            select
+            <foreach collection="item" item="column" index="key" separator=",">
+                #{column}
+            </foreach>
+            from dual where #{item.KEY_VALUE}=T.${KEY_ID}
+        </foreach>
+        ) WHERE exists(
+        <foreach collection="dataList" item="item" index="index" separator="union all">
+            select 1 from dual where #{item.KEY_VALUE}=T.${KEY_ID}
+        </foreach>
+        )
+    </update>
+    <update id="update" parameterType="java.util.Map">
+        update ${TABLE_NAME} set
+        <foreach collection="dataMap.keys" item="key" index="index" separator=",">
+            ${key}=#{dataMap[${key}]}
+        </foreach>
+        where ${KEY_ID}=#{KEY_VALUE}
+    </update>
+    <select id="list" parameterType="java.util.Map" resultType="hashmap">
+        ${SQL}
+    </select>
+    <delete id="delete" parameterType="java.util.Map">
+        delete ${TABLE_NAME} where ${KEY_ID}=#{KEY_VALUE}
+    </delete>
+    <delete id="execute" parameterType="java.util.Map">
+        ${SQL}
+    </delete>
+</mapper>
