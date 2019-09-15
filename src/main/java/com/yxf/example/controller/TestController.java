@@ -111,7 +111,7 @@ public class TestController {
         daoService.insertObjects(insertList);
         return "1";
     }
-    //update批量
+    //update
     @RequestMapping("/update")
     public void update(){
         User user = new User();

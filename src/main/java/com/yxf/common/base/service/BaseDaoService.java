@@ -86,6 +86,7 @@ public interface BaseDaoService {
     public int updateObjects(List list,int bathLimit);
     public int updateObjects(String[] columns,List list,int bathLimit);
     public int updateMaps(String tableName,String keyColumn,String[] columns,List<Map<String,Object>> list,int bathLimit);
+    public int updateMaps(String tableName,String keyColumn,String[] columns,List<Map<String,Object>> list,int bathLimit,String where);
     /**
      * 主键不为空为新增，反之更新
      * @param entity

@@ -19,6 +19,7 @@ import java.util.regex.Pattern;
 import javax.annotation.Resource;
 
 import com.yxf.common.base.dao.BaseMapper;
+import com.yxf.common.base.exception.SystemException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,11 +36,11 @@ public class BaseDaoServiceImpl implements BaseDaoService {
 
     private static final Logger log = LoggerFactory.getLogger(BaseDaoServiceImpl.class);
     @Resource
-    private BaseMapper baseMapper;
+    private BaseMapper          baseMapper;
 
     /**
      * 实体对象插入到数据库
-     * 
+     *
      * @param entity
      * @return
      */
@@ -51,7 +52,7 @@ public class BaseDaoServiceImpl implements BaseDaoService {
 
     /**
      * 采用 union all select方式insert，该方式效率较高，会对对象所有注解字段进行操作
-     * 
+     *
      * @param list 实体对象集合
      * @return
      */
@@ -73,7 +74,7 @@ public class BaseDaoServiceImpl implements BaseDaoService {
 
     /**
      * 采用 union all select方式insert，该方式效率较高，但需要指定字段
-     * 
+     *
      * @param columns 指定插入的字段例（不区分大小写）：id,name,age
      * @param list 实体对象集合
      * @return
@@ -105,8 +106,10 @@ public class BaseDaoServiceImpl implements BaseDaoService {
                 }
             }
             // 处理删除多余的字段
-            for (String column : dataMap.keySet()) {
-                if (!columnList.contains(column)) {
+            Object[] columnAttr = dataMap.keySet().toArray();
+            for (int i=0;i<columnAttr.length;i++) {
+                String column = columnAttr[i].toString();
+                if (!column.startsWith("_SQL_") && !columnList.contains(column)) {
                     dataMap.remove(column);
                 }
             }
@@ -119,7 +122,7 @@ public class BaseDaoServiceImpl implements BaseDaoService {
 
     /**
      * 批量insert并支持分批插入，如全量则bathLimit=0,采用select模式
-     * 
+     *
      * @param tableName
      * @param columns 采用insert all模式时不需要
      * @param list
@@ -143,7 +146,7 @@ public class BaseDaoServiceImpl implements BaseDaoService {
                 int end = (dif + 1) * diffCount;
                 // 分批
                 n += baseMapper.insertBath(tableName, columns,
-                                           list.subList(start, end > list.size() ? list.size() : end));
+                        list.subList(start, end > list.size() ? list.size() : end));
             }
             return n;
         }
@@ -153,7 +156,7 @@ public class BaseDaoServiceImpl implements BaseDaoService {
 
     /**
      * 批量insert并支持全量插入，该方式支持不同实体分别insert到不同的表中,采用insert all模式
-     * 
+     *
      * @param list
      * @return
      */
@@ -163,7 +166,7 @@ public class BaseDaoServiceImpl implements BaseDaoService {
 
     /**
      * 采用 union all select方式insert，该方式效率较高，但需要指定字段
-     * 
+     *
      * @param list 实体对象集合
      * @return
      */
@@ -180,7 +183,7 @@ public class BaseDaoServiceImpl implements BaseDaoService {
 
     /**
      * 批量insert并支持分批插入，该方式支持不同实体分别insert到不同的表中，如全量则bathLimit=0,采用insert all模式
-     * 
+     *
      * @param list
      * @param bathLimit 分批
      * @return
@@ -210,7 +213,7 @@ public class BaseDaoServiceImpl implements BaseDaoService {
 
     /**
      * 通过Map插入到数据库
-     * 
+     *
      * @param tableName
      * @param dataMap
      * @return
@@ -239,7 +242,7 @@ public class BaseDaoServiceImpl implements BaseDaoService {
         // 将对象数据转为Map数据
         List<Map<String, Object>> dataList = new ArrayList();
         // 字段转换为大写
-        List<String> columnList = new ArrayList<>();
+        List<String> columnList = new ArrayList();
         for (int i = 0; i < columns.length; i++) {
             columns[i] = columns[i].toUpperCase();
             columnList.add(columns[i]);
@@ -264,8 +267,10 @@ public class BaseDaoServiceImpl implements BaseDaoService {
                 }
             }
             // 处理删除多余的字段
-            for (String column : dataMap.keySet()) {
-                if (!columnList.contains(column)) {
+            Object[] columnAttr = dataMap.keySet().toArray();
+            for (int i=0;i<columnAttr.length;i++) {
+                String column = columnAttr[i].toString();
+                if (!column.startsWith("_SQL_") && !columnList.contains(column) && !keyColumn.equalsIgnoreCase(column)) {
                     dataMap.remove(column);
                 }
             }
@@ -275,11 +280,36 @@ public class BaseDaoServiceImpl implements BaseDaoService {
         Arrays.sort(columns);
         return updateMaps(table, keyColumn, columns, dataList, bathLimit);
     }
-
+    /**
+     * 批量更新
+     * @param tableName 表名
+     * @param keyColumn 主键字段
+     * @param columns   更新字段
+     * @param list      更新内容
+     * @param bathLimit 分批处理（每批次更新条数）
+     * @return  返回更新数
+     */
     public int updateMaps(String tableName, String keyColumn, String[] columns, List<Map<String, Object>> list,
                           int bathLimit) {
+        return updateMaps(tableName, keyColumn, columns, list,bathLimit,null);
+    }
+
+    /**
+     * 批量更新
+     * @param tableName 表名
+     * @param keyColumn 主键字段
+     * @param columns   更新字段
+     * @param list      更新内容
+     * @param bathLimit 分批处理（每批次更新条数）
+     * @param where     增加查询条件
+     * @return  返回更新数
+     */
+    public int updateMaps(String tableName, String keyColumn, String[] columns, List<Map<String, Object>> list,
+                          int bathLimit,String where) {
         if (columns == null || columns.length == 0 || list == null || list.size() == 0) return 0;
-        // 分批update
+        if(list.get(0).get(keyColumn) == null)
+            throw new SystemException("主键字段无内容");
+        // 分批处理update
         if (bathLimit > 0) {
             int diffCount = bathLimit;
             int diffCic = 0;
@@ -294,16 +324,17 @@ public class BaseDaoServiceImpl implements BaseDaoService {
                 int end = (dif + 1) * diffCount;
                 // 分批
                 n += baseMapper.updateBath(tableName, keyColumn, columns,
-                                           list.subList(start, end > list.size() ? list.size() : end));
+                        list.subList(start, end > list.size() ? list.size() : end),where);
             }
             return n;
         }
-        return baseMapper.updateBath(tableName, keyColumn, columns, list);
+        return baseMapper.updateBath(tableName, keyColumn, columns, list,where);
     }
+
 
     /**
      * 根据实体对象保存
-     * 
+     *
      * @param entity
      * @return
      */
@@ -313,7 +344,7 @@ public class BaseDaoServiceImpl implements BaseDaoService {
             throw new RuntimeException("实体类没有主键.");
         }
         if (params.get("KEY_VALUE") == null
-            || (params.get("KEY_VALUE") instanceof String && ((String) params.get("KEY_VALUE")).trim().equals(""))) {
+                || (params.get("KEY_VALUE") instanceof String && ((String) params.get("KEY_VALUE")).trim().equals(""))) {
             throw new RuntimeException("主键值不能为空.");
         }
         // 主键赋值
@@ -333,7 +364,7 @@ public class BaseDaoServiceImpl implements BaseDaoService {
         // 主键赋值
         params.put("KEY_VALUE", keyValue);
         // 删除对象中主键数据
-        LinkedHashMap<String, Object> dataMap = (LinkedHashMap<String, Object>) params.get("dataMap");
+        Map<String, Object> dataMap = (Map<String, Object>) params.get("dataMap");
         dataMap.remove(params.get("KEY_ID"));
         // 保存
         return baseMapper.update(params);
@@ -341,7 +372,7 @@ public class BaseDaoServiceImpl implements BaseDaoService {
 
     /**
      * 主键不为空为新增，反之更新
-     * 
+     *
      * @param entity
      * @return
      */
@@ -352,7 +383,7 @@ public class BaseDaoServiceImpl implements BaseDaoService {
         }
         // 判断是更新还是新增
         if (params.get("KEY_VALUE") == null
-            || (params.get("KEY_VALUE") instanceof String && ((String) params.get("KEY_VALUE")).trim().equals(""))) {
+                || (params.get("KEY_VALUE") instanceof String && ((String) params.get("KEY_VALUE")).trim().equals(""))) {
             // 新增
             return insertObject(entity);
         } else {
@@ -363,7 +394,7 @@ public class BaseDaoServiceImpl implements BaseDaoService {
 
     /**
      * 根据主键删除指定实体对象对应的表数据
-     * 
+     *
      * @param entity 实体类
      * @param keyValue 主键值
      * @return
@@ -385,7 +416,7 @@ public class BaseDaoServiceImpl implements BaseDaoService {
 
     /**
      * 执行sql
-     * 
+     *
      * @param sql
      * @param params
      * @return
@@ -402,7 +433,7 @@ public class BaseDaoServiceImpl implements BaseDaoService {
 
     /**
      * 通过sql查询并将结果集赋值到指定的类
-     * 
+     *
      * @param sql
      * @param params
      * @param clazz
@@ -434,7 +465,7 @@ public class BaseDaoServiceImpl implements BaseDaoService {
 
     /**
      * 返回一个数据结果
-     * 
+     *
      * @param sql
      * @param params
      * @return
@@ -466,10 +497,9 @@ public class BaseDaoServiceImpl implements BaseDaoService {
         List<T> list = list(sql, params,entity);
         return list.size() == 0 ? null : list.get(0);
     }
-
     /**
      * 获取结果集总数
-     * 
+     *
      * @param sql
      * @param params
      * @return
@@ -495,7 +525,7 @@ public class BaseDaoServiceImpl implements BaseDaoService {
 
     /**
      * 返回实体类的所有数据
-     * 
+     *
      * @param entity
      * @return
      */
@@ -511,7 +541,7 @@ public class BaseDaoServiceImpl implements BaseDaoService {
 
     /**
      * 分页处理
-     * 
+     *
      * @param sql
      * @param params
      * @param clazz
@@ -544,7 +574,7 @@ public class BaseDaoServiceImpl implements BaseDaoService {
 
     /**
      * 针对sql中${}参数的处理
-     * 
+     *
      * @param sql
      * @return
      */
@@ -623,3 +653,4 @@ public class BaseDaoServiceImpl implements BaseDaoService {
         return sql;
     }
 }
+
