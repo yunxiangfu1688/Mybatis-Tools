@@ -3,9 +3,11 @@
 
 
 #获得列表全部字段
+
     List list = daoService.list("select * from user",null, User.class);
 
 #获得列表部分字段
+
     Map<String, Object> params = new HashMap<>();
     List li = new ArrayList();
     li.add("D501050014");
@@ -16,6 +18,7 @@
 
 
 #获得一对多数据
+
     Map<String, Object> params = new HashMap<>();
     params.put("id","1");
     StringBuilder sql = new StringBuilder("select ");
@@ -31,6 +34,7 @@
     List list = daoService.list(sql.toString(),params, Dept.class);
 
 #insert单条
+
     User user = new User();
     user.setId("1");
     user.setCrtDate(new Date());
@@ -42,6 +46,7 @@
 
 
 #insert批量
+
     List<User> insertList = new ArrayList();
     User user = new User();
     user.setId("1");
@@ -77,6 +82,7 @@
     daoService.insertObjects(insertList);
     
 #update
+
         User user = new User();
         user.setId("1");
         user.setCrtDate(new Date());
@@ -88,6 +94,7 @@
         daoService.updateObject(user);
 
 #update批量
+
         List<User> updateList = new ArrayList();
         User user = new User();
         user.setId("1");
